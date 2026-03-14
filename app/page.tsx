@@ -598,7 +598,7 @@ export default function EnergyAgentDashboard() {
                       <div style={{ width:24, height:24, borderRadius:7, background:"rgba(41,121,212,0.1)", border:"1px solid rgba(0,180,216,0.2)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:10, color:C.blue, fontFamily:"monospace", fontWeight:700, flexShrink:0, marginTop:1 }}>{step}</div>
                       <div style={{ flex:1 }}>
                         <Label>{label}</Label>
-                        <p style={{ fontSize:13, color:C.textD, lineHeight:1.75, margin:0 }}>{String(content||"")}</p>
+                        <p style={{ fontSize:13, color:C.textD, lineHeight:1.75, margin:0 }}>{typeof content === "object" ? JSON.stringify(content) : String(content||"")}</p>
                       </div>
                     </div>
                   </Card>
