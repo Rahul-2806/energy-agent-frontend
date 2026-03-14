@@ -418,9 +418,14 @@ export default function EnergyAgentDashboard() {
         ::-webkit-scrollbar{width:3px;height:3px}
         ::-webkit-scrollbar-thumb{background:${C.border2};border-radius:2px}
         a{text-decoration:none}
-        @media(max-width:600px){
+        @media(max-width:640px){
+          .hide-mobile{display:none!important}
           table{font-size:11px!important}
           table td,table th{padding:6px 8px!important}
+          .ea-rec-row{flex-direction:column!important}
+        }
+        @media(min-width:641px){
+          .hide-mobile{display:flex!important}
         }
       `}</style>
 
@@ -439,20 +444,20 @@ export default function EnergyAgentDashboard() {
                   <span style={{ background:C.grad, WebkitBackgroundClip:"text", WebkitTextFillColor:"transparent" }}>Energy</span>
                   <span style={{ color:C.text }}>Agent</span>
                 </div>
-                <div style={{ fontSize:9, color:C.textDD, letterSpacing:2.5, fontFamily:"monospace" }}>AUTONOMOUS MARKET INTELLIGENCE</div>
+                <div className="hide-mobile" style={{ fontSize:9, color:C.textDD, letterSpacing:2.5, fontFamily:"monospace" }}>AUTONOMOUS MARKET INTELLIGENCE</div>
               </div>
             </div>
-            <div style={{ display:"flex", alignItems:"center", gap:6, flexShrink:0, flexWrap:"wrap" as const, justifyContent:"flex-end" }}>
+            <div style={{ display:"flex", alignItems:"center", gap:6, flexShrink:0 }}>
               {src==="ENTSO-E" && (
-                <div style={{ display:"flex", alignItems:"center", gap:5, background:"rgba(41,121,212,0.1)", border:"1px solid rgba(0,180,216,0.2)", borderRadius:6, padding:"3px 9px" }}>
+                <div className="hide-mobile" style={{ display:"flex", alignItems:"center", gap:5, background:"rgba(41,121,212,0.1)", border:"1px solid rgba(0,180,216,0.2)", borderRadius:6, padding:"3px 9px" }}>
                   <div style={{ width:5, height:5, borderRadius:"50%", background:C.blue, animation:"bPulse 2s infinite" }}/>
                   <span style={{ fontSize:9, color:C.blue, letterSpacing:1.5, fontFamily:"monospace" }}>ENTSO-E LIVE</span>
                 </div>
               )}
-              <span style={{ fontSize:10, color:C.textDD, fontFamily:"monospace" }}>{updated} · AI {mins}:{secs.toString().padStart(2,"0")}</span>
+              <span className="hide-mobile" style={{ fontSize:10, color:C.textDD, fontFamily:"monospace", whiteSpace:"nowrap" as const }}>{updated} · AI {mins}:{secs.toString().padStart(2,"0")}</span>
               <button onClick={()=>runAnalysis()} disabled={loading} className="gbtn"
-                style={{ padding:"7px 20px", fontSize:10, fontWeight:700, letterSpacing:1.5, fontFamily:"monospace", borderRadius:8, border:`1px solid ${C.border2}`, background:"rgba(41,121,212,0.1)", color:loading?C.textDD:"#00c8e8", cursor:loading?"not-allowed":"pointer", transition:"all 0.2s" }}>
-                {loading?"ANALYZING...":"▶ RUN AI"}
+                style={{ padding:"7px 14px", fontSize:10, fontWeight:700, letterSpacing:1, fontFamily:"monospace", borderRadius:8, border:`1px solid ${C.border2}`, background:"rgba(41,121,212,0.1)", color:loading?C.textDD:"#00c8e8", cursor:loading?"not-allowed":"pointer", transition:"all 0.2s", whiteSpace:"nowrap" as const }}>
+                {loading?"...":"▶ RUN AI"}
               </button>
             </div>
           </div>
@@ -486,7 +491,7 @@ export default function EnergyAgentDashboard() {
           <div className="ea1" style={{ background:recGrad, border:`1px solid ${recBorder}`, borderRadius:20, padding:"16px 14px", marginBottom:14, position:"relative", overflow:"hidden" }}>
             {/* Decorative gradient orb */}
             <div style={{ position:"absolute", top:-60, right:-60, width:200, height:200, borderRadius:"50%", background:`radial-gradient(circle,${recC}15,transparent 70%)`, pointerEvents:"none" }}/>
-            <div style={{ display:"flex", flexWrap:"wrap", gap:14, alignItems:"flex-start", position:"relative" }}>
+            <div style={{ display:"flex", flexWrap:"wrap", gap:12, alignItems:"flex-start", position:"relative", flexDirection:"column" as const }}>
               <div style={{ minWidth:0, flexShrink:0 }}>
                 <div style={{ fontSize:9, color:C.textDD, letterSpacing:3, fontFamily:"monospace", marginBottom:5 }}>AI SIGNAL · {data.prices.market_label?.toUpperCase()}</div>
                 <div style={{ fontSize:58, fontWeight:800, color:recC, letterSpacing:-2.5, lineHeight:1 }}>{rec?.action}</div>
