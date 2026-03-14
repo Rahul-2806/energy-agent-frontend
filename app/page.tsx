@@ -720,22 +720,7 @@ export default function EnergyAgentDashboard() {
           </div>
 
           {/* ── CHAT ── */}
-                    <Card style={{ padding:"16px 18px", marginBottom:14 }}>
-            <div style={{fontSize:9,color:C.textDD,letterSpacing:3,fontFamily:"monospace",fontWeight:700,marginBottom:12}}>WHATSAPP ALERTS</div>
-            <p style={{fontSize:12,color:C.textD,lineHeight:1.7,marginBottom:10,marginTop:0}}>Get instant WhatsApp notifications on high-severity signals. Enter your number with country code.</p>
-
-            <div style={{display:"flex",flexDirection:"column",gap:8}}>
-              <input type="tel" value={phone} onChange={e=>setPhone(e.target.value)} onKeyDown={e=>e.key==="Enter"&&waSubscribe()} placeholder="+91 9876543210"
-                style={{background:C.bg1,border:`1px solid ${C.border}`,borderRadius:9,padding:"9px 14px",fontSize:13,color:C.text,fontFamily:C.SF,outline:"none",transition:"border-color 0.2s"}} />
-              <button onClick={waSubscribe} disabled={waLoad||!phone.trim()} className="gbtn"
-                style={{padding:"10px",fontSize:10,fontWeight:700,letterSpacing:1.5,fontFamily:"monospace",borderRadius:8,border:"1px solid rgba(37,211,102,0.2)",background:"rgba(37,211,102,0.07)",color:waLoad?"rgba(37,211,102,0.3)":"rgba(37,211,102,0.85)",cursor:waLoad?"not-allowed":"pointer",transition:"all 0.2s"}}>
-                {waLoad?"SUBSCRIBING...":"SUBSCRIBE VIA WHATSAPP"}
-              </button>
-            </div>
-            {waMsg&&<div style={{marginTop:10,fontSize:11,padding:"8px 12px",borderRadius:8,background:waMsg.includes("Subscribed")||waMsg.includes("Already")?"rgba(37,211,102,0.08)":"rgba(224,92,92,0.08)",border:`1px solid ${waMsg.includes("Subscribed")||waMsg.includes("Already")?"rgba(37,211,102,0.25)":"rgba(224,92,92,0.25)"}`,color:waMsg.includes("Subscribed")||waMsg.includes("Already")?"rgba(37,211,102,0.9)":C.red,fontFamily:"monospace"}}>{waMsg}</div>}
-          </Card>
-
-<Card style={{ overflow:"hidden" }}>
+          <Card style={{ overflow:"hidden" }}>
             <div style={{ padding:"10px 14px", borderBottom:`1px solid ${C.border}`, display:"flex", alignItems:"center", gap:8 }}>
               <div style={{ width:7, height:7, borderRadius:"50%", background:C.blue, animation:"bPulse 2s infinite" }}/>
               <span style={{ fontSize:10, color:C.textD, fontWeight:700, letterSpacing:2, fontFamily:"monospace" }}>ASK THE AGENT</span>
