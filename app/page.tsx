@@ -330,6 +330,9 @@ export default function EnergyAgentDashboard() {
   const [email,   setEmail]   = useState("");
   const [subMsg,  setSubMsg]  = useState("");
   const [subLoad, setSubLoad] = useState(false);
+  const [phone,   setPhone]   = useState("");
+  const [waMsg,   setWaMsg]   = useState("");
+  const [waLoad,  setWaLoad]  = useState(false);
   const [alertCfg,setAlertCfg]= useState({ price_above:150, price_below:30, volatility_above:25 });
   const [saved,   setSaved]   = useState(false);
   const [updated, setUpdated] = useState("");
@@ -370,6 +373,17 @@ export default function EnergyAgentDashboard() {
       const r=await fetch(`${API_URL}/api/subscribe`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({email})});
       const j=await r.json(); setSubMsg(j.message); if(j.subscribed)setEmail("");
     } catch { setSubMsg("Connection error"); } finally { setSubLoad(false); }
+  };
+
+  const waSubscribe=async()=>{
+    if(!phone||phone.length<8){setWaMsg("Enter a valid phone with country code");return;}
+    setWaLoad(true);
+    try{
+      const r=await fetch(`${API_URL}/api/wa/subscribe`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({phone})});
+      const j=await r.json();setWaMsg(j.message);
+      if(j.subscribed)setPhone("");
+    }catch{setWaMsg("Connection error");}
+    finally{setWaLoad(false);}
   };
 
   const saveAlerts=async()=>{
@@ -683,7 +697,11 @@ export default function EnergyAgentDashboard() {
 
             <Card style={{ padding:"14px 14px", border:`1px solid rgba(0,180,216,0.15)` }}>
               <Label>EMAIL ALERTS</Label>
-              <p style={{ fontSize:12, color:C.textD, lineHeight:1.7, marginBottom:14, marginTop:0 }}>Subscribe to receive automatic alerts when high-severity signals are triggered. Works with any email address.</p>
+              <p style={{ fontSize:12, color:C.textD, lineHeight:1.7, marginBottom:10, marginTop:0 }}>Subscribe to receive automatic alerts when high-severity signals are triggered. Works with any email address.</p>
+              <div style={{ background:"rgba(255,214,10,0.06)", border:"1px solid rgba(255,214,10,0.18)", borderRadius:8, padding:"8px 12px", marginBottom:12, display:"flex", gap:8, alignItems:"flex-start" }}>
+                <span style={{ fontSize:12, flexShrink:0 }}>⚠️</span>
+                <span style={{ fontSize:11, color:"rgba(255,214,10,0.65)", lineHeight:1.6 }}>Emails may arrive in your <strong style={{color:"rgba(255,214,10,0.85)"}}>spam/junk folder</strong>. Please check there and mark as "Not Spam" to receive future alerts in your inbox.</span>
+              </div>
               <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
                 <input type="email" value={email} onChange={e=>setEmail(e.target.value)}
                   onKeyDown={e=>e.key==="Enter"&&subscribe()}
@@ -702,7 +720,22 @@ export default function EnergyAgentDashboard() {
           </div>
 
           {/* ── CHAT ── */}
-          <Card style={{ overflow:"hidden" }}>
+                    <Card style={{ padding:"16px 18px", marginBottom:14 }}>
+            <div style={{fontSize:9,color:C.textDD,letterSpacing:3,fontFamily:"monospace",fontWeight:700,marginBottom:12}}>WHATSAPP ALERTS</div>
+            <p style={{fontSize:12,color:C.textD,lineHeight:1.7,marginBottom:10,marginTop:0}}>Get instant WhatsApp notifications on high-severity signals. Enter your number with country code.</p>
+
+            <div style={{display:"flex",flexDirection:"column",gap:8}}>
+              <input type="tel" value={phone} onChange={e=>setPhone(e.target.value)} onKeyDown={e=>e.key==="Enter"&&waSubscribe()} placeholder="+91 9876543210"
+                style={{background:C.bg1,border:`1px solid ${C.border}`,borderRadius:9,padding:"9px 14px",fontSize:13,color:C.text,fontFamily:C.SF,outline:"none",transition:"border-color 0.2s"}} />
+              <button onClick={waSubscribe} disabled={waLoad||!phone.trim()} className="gbtn"
+                style={{padding:"10px",fontSize:10,fontWeight:700,letterSpacing:1.5,fontFamily:"monospace",borderRadius:8,border:"1px solid rgba(37,211,102,0.2)",background:"rgba(37,211,102,0.07)",color:waLoad?"rgba(37,211,102,0.3)":"rgba(37,211,102,0.85)",cursor:waLoad?"not-allowed":"pointer",transition:"all 0.2s"}}>
+                {waLoad?"SUBSCRIBING...":"SUBSCRIBE VIA WHATSAPP"}
+              </button>
+            </div>
+            {waMsg&&<div style={{marginTop:10,fontSize:11,padding:"8px 12px",borderRadius:8,background:waMsg.includes("Subscribed")||waMsg.includes("Already")?"rgba(37,211,102,0.08)":"rgba(224,92,92,0.08)",border:`1px solid ${waMsg.includes("Subscribed")||waMsg.includes("Already")?"rgba(37,211,102,0.25)":"rgba(224,92,92,0.25)"}`,color:waMsg.includes("Subscribed")||waMsg.includes("Already")?"rgba(37,211,102,0.9)":C.red,fontFamily:"monospace"}}>{waMsg}</div>}
+          </Card>
+
+<Card style={{ overflow:"hidden" }}>
             <div style={{ padding:"10px 14px", borderBottom:`1px solid ${C.border}`, display:"flex", alignItems:"center", gap:8 }}>
               <div style={{ width:7, height:7, borderRadius:"50%", background:C.blue, animation:"bPulse 2s infinite" }}/>
               <span style={{ fontSize:10, color:C.textD, fontWeight:700, letterSpacing:2, fontFamily:"monospace" }}>ASK THE AGENT</span>
