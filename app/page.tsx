@@ -213,7 +213,7 @@ function LiveChart({ market }: { market: string }) {
 
   return (
     <div style={{ background:C.bg2, border:`1px solid ${C.border}`, borderRadius:16, overflow:"hidden" }}>
-      <div style={{ padding:"16px 20px 12px", borderBottom:`1px solid ${C.border}` }}>
+      <div style={{ padding:"12px 14px 10px", borderBottom:`1px solid ${C.border}` }}>
         <div style={{ display:"flex", flexWrap:"wrap", alignItems:"flex-start", gap:12, marginBottom:10 }}>
           <div>
             <div style={{ fontSize:10, color:C.textDD, letterSpacing:2, fontFamily:"monospace", marginBottom:3 }}>
@@ -233,7 +233,7 @@ function LiveChart({ market }: { market: string }) {
               </div>
             ))}
           </div>
-          <div style={{ marginLeft:"auto", display:"flex", alignItems:"center", gap:10, flexShrink:0 }}>
+          <div style={{ marginLeft:"auto", display:"flex", alignItems:"center", gap:6, flexShrink:0, flexWrap:"wrap" as const, justifyContent:"flex-end" }}>
             <span style={{ fontSize:10, color:C.textDD, fontFamily:"monospace" }}>NEXT {cd}s</span>
             <div style={{ display:"flex", alignItems:"center", gap:5, background:"rgba(41,121,212,0.1)", border:"1px solid rgba(0,180,216,0.2)", borderRadius:5, padding:"3px 8px" }}>
               <div style={{ width:5, height:5, borderRadius:"50%", background:C.blue, animation:"bPulse 2s infinite" }} />
@@ -249,7 +249,7 @@ function LiveChart({ market }: { market: string }) {
           ))}
         </div>
       </div>
-      <div style={{ padding:"10px 20px 0", display:"flex", gap:5 }}>
+      <div style={{ padding:"8px 14px 0", display:"flex", gap:5 }}>
         {["line","candle","area"].map(m=>(
           <button key={m} onClick={()=>{setMode(m);modeR.current=m;draw();}} style={{ padding:"4px 14px", fontSize:9, letterSpacing:1.5, fontFamily:"monospace", fontWeight:700, borderRadius:5, border:`1px solid ${mode===m?"rgba(0,180,216,0.4)":C.border}`, background:mode===m?"rgba(41,121,212,0.1)":"transparent", color:mode===m?C.blue:C.textDD, cursor:"pointer", transition:"all 0.2s", textTransform:"uppercase" as const }}>
             {m}
@@ -261,7 +261,7 @@ function LiveChart({ market }: { market: string }) {
         onMouseLeave={()=>{mouse.current={x:-1,y:-1};draw();}}>
         <canvas ref={cvs} style={{ width:"100%", height:"100%" }} />
       </div>
-      <div style={{ borderTop:`1px solid ${C.border}`, padding:"8px 20px", display:"flex", gap:24, overflowX:"auto", background:C.bg1 }}>
+      <div style={{ borderTop:`1px solid ${C.border}`, padding:"8px 14px", display:"flex", gap:24, overflowX:"auto", background:C.bg1 }}>
         {Object.entries(st.ticker).map(([mk,price])=>{
           const diff=price-MARKET_CFG[mk].base;
           return (
@@ -418,13 +418,17 @@ export default function EnergyAgentDashboard() {
         ::-webkit-scrollbar{width:3px;height:3px}
         ::-webkit-scrollbar-thumb{background:${C.border2};border-radius:2px}
         a{text-decoration:none}
+        @media(max-width:600px){
+          table{font-size:11px!important}
+          table td,table th{padding:6px 8px!important}
+        }
       `}</style>
 
       {/* Gradient top bar */}
       <div style={{ height:2, background:"linear-gradient(90deg,#4d8ef5,#7c5cbf,#4d8ef5)", backgroundSize:"200% 100%", animation:"gradShift 4s ease infinite" }} />
 
       {/* ── HEADER ── */}
-      <header style={{ position:"sticky", top:0, zIndex:100, background:`${C.bg0}f0`, backdropFilter:"blur(24px)", WebkitBackdropFilter:"blur(24px)", borderBottom:`1px solid ${C.border}`, padding:"0 24px" }}>
+      <header style={{ position:"sticky", top:0, zIndex:100, background:`${C.bg0}f0`, backdropFilter:"blur(24px)", WebkitBackdropFilter:"blur(24px)", borderBottom:`1px solid ${C.border}`, padding:"0 12px" }}>
         <div style={{ maxWidth:1120, margin:"0 auto" }}>
           <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", height:56 }}>
             <div style={{ display:"flex", alignItems:"center", gap:12 }}>
@@ -438,7 +442,7 @@ export default function EnergyAgentDashboard() {
                 <div style={{ fontSize:9, color:C.textDD, letterSpacing:2.5, fontFamily:"monospace" }}>AUTONOMOUS MARKET INTELLIGENCE</div>
               </div>
             </div>
-            <div style={{ display:"flex", alignItems:"center", gap:10, flexShrink:0 }}>
+            <div style={{ display:"flex", alignItems:"center", gap:6, flexShrink:0, flexWrap:"wrap" as const, justifyContent:"flex-end" }}>
               {src==="ENTSO-E" && (
                 <div style={{ display:"flex", alignItems:"center", gap:5, background:"rgba(41,121,212,0.1)", border:"1px solid rgba(0,180,216,0.2)", borderRadius:6, padding:"3px 9px" }}>
                   <div style={{ width:5, height:5, borderRadius:"50%", background:C.blue, animation:"bPulse 2s infinite" }}/>
@@ -476,14 +480,14 @@ export default function EnergyAgentDashboard() {
       )}
 
       {data && (
-        <main style={{ maxWidth:1120, margin:"0 auto", padding:"20px 16px 48px" }}>
+        <main style={{ maxWidth:1120, margin:"0 auto", padding:"16px 10px 48px" }}>
 
           {/* ── RECOMMENDATION ── */}
-          <div className="ea1" style={{ background:recGrad, border:`1px solid ${recBorder}`, borderRadius:20, padding:"22px 26px", marginBottom:14, position:"relative", overflow:"hidden" }}>
+          <div className="ea1" style={{ background:recGrad, border:`1px solid ${recBorder}`, borderRadius:20, padding:"16px 14px", marginBottom:14, position:"relative", overflow:"hidden" }}>
             {/* Decorative gradient orb */}
             <div style={{ position:"absolute", top:-60, right:-60, width:200, height:200, borderRadius:"50%", background:`radial-gradient(circle,${recC}15,transparent 70%)`, pointerEvents:"none" }}/>
-            <div style={{ display:"flex", flexWrap:"wrap", gap:24, alignItems:"flex-start", position:"relative" }}>
-              <div style={{ minWidth:150 }}>
+            <div style={{ display:"flex", flexWrap:"wrap", gap:14, alignItems:"flex-start", position:"relative" }}>
+              <div style={{ minWidth:0, flexShrink:0 }}>
                 <div style={{ fontSize:9, color:C.textDD, letterSpacing:3, fontFamily:"monospace", marginBottom:5 }}>AI SIGNAL · {data.prices.market_label?.toUpperCase()}</div>
                 <div style={{ fontSize:58, fontWeight:800, color:recC, letterSpacing:-2.5, lineHeight:1 }}>{rec?.action}</div>
                 <div style={{ fontSize:11, color:C.textDD, marginTop:5, fontFamily:"monospace" }}>CONFIDENCE: <span style={{ color:C.textD }}>{rec?.confidence}</span></div>
@@ -494,9 +498,9 @@ export default function EnergyAgentDashboard() {
                   </div>
                 )}
               </div>
-              <div style={{ flex:1, fontSize:13, color:C.textD, lineHeight:1.8, minWidth:200 }}>{rec?.summary}</div>
+              <div style={{ flex:1, fontSize:13, color:C.textD, lineHeight:1.8, minWidth:0 }}>{rec?.summary}</div>
               {(rec?.key_factors?.length??0)>0 && (
-                <div style={{ minWidth:190 }}>
+                <div style={{ minWidth:0 }}>
                   <div style={{ fontSize:9, color:C.textDD, letterSpacing:3, fontFamily:"monospace", marginBottom:8 }}>KEY FACTORS</div>
                   {rec!.key_factors.map((f,i)=>(
                     <div key={i} style={{ fontSize:12, color:C.textD, marginBottom:5, display:"flex", gap:8, alignItems:"flex-start", lineHeight:1.5 }}>
@@ -553,7 +557,7 @@ export default function EnergyAgentDashboard() {
             <div style={{ display:"flex", borderBottom:`1px solid ${C.border}`, marginBottom:16, overflowX:"auto" }}>
               {(["reasoning","news","history","logs"] as const).map(t=>(
                 <button key={t} onClick={()=>setTab(t)} className="tabBtn"
-                  style={{ padding:"10px 20px", fontSize:11, fontWeight:700, letterSpacing:1.5, fontFamily:"monospace", background:"transparent", border:"none", borderBottom:`2px solid ${tab===t?"#00c8e8":"transparent"}`, color:tab===t?"#00c8e8":C.textDD, cursor:"pointer", whiteSpace:"nowrap", transition:"all 0.2s" }}>
+                  style={{ padding:"10px 14px", fontSize:11, fontWeight:700, letterSpacing:1.5, fontFamily:"monospace", background:"transparent", border:"none", borderBottom:`2px solid ${tab===t?"#00c8e8":"transparent"}`, color:tab===t?"#00c8e8":C.textDD, cursor:"pointer", whiteSpace:"nowrap", transition:"all 0.2s" }}>
                   {t.toUpperCase()}
                 </button>
               ))}
@@ -563,14 +567,14 @@ export default function EnergyAgentDashboard() {
               <div style={{ display:"grid", gap:10 }}>
                 <div style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(200px,1fr))", gap:8 }}>
                   {[["SUPPLY SIGNALS",intel?.supply_signals],["DEMAND SIGNALS",intel?.demand_signals],["GEOPOLITICAL RISKS",intel?.geopolitical_risks],["MARKET MOVING NEWS",intel?.market_moving_news]].map(([label,content])=>(
-                    <Card key={String(label)} style={{ padding:"14px 16px" }}>
+                    <Card key={String(label)} style={{ padding:"12px 12px" }}>
                       <Label>{label}</Label>
                       <p style={{ fontSize:12, color:C.textD, lineHeight:1.7, margin:0 }}>{String(content||"N/A")}</p>
                     </Card>
                   ))}
                 </div>
                 {[["PRICE ANALYSIS",reasoning.price_analysis,1],["NEWS SIGNALS",reasoning.news_signals,2],["RISK ASSESSMENT",reasoning.risk_assessment,3],["MARKET OUTLOOK",reasoning.market_outlook,4]].map(([label,content,step])=>(
-                  <Card key={String(label)} style={{ padding:"14px 18px" }}>
+                  <Card key={String(label)} style={{ padding:"12px 14px" }}>
                     <div style={{ display:"flex", gap:12, alignItems:"flex-start" }}>
                       <div style={{ width:24, height:24, borderRadius:7, background:"rgba(41,121,212,0.1)", border:"1px solid rgba(0,180,216,0.2)", display:"flex", alignItems:"center", justifyContent:"center", fontSize:10, color:C.blue, fontFamily:"monospace", fontWeight:700, flexShrink:0, marginTop:1 }}>{step}</div>
                       <div style={{ flex:1 }}>
@@ -580,7 +584,7 @@ export default function EnergyAgentDashboard() {
                     </div>
                   </Card>
                 ))}
-                <div style={{ background:recGrad, border:`1px solid ${recBorder}`, borderRadius:14, padding:"16px 20px" }}>
+                <div style={{ background:recGrad, border:`1px solid ${recBorder}`, borderRadius:14, padding:"14px 14px" }}>
                   <Label>STEP 5 — FINAL VERDICT</Label>
                   <div style={{ fontSize:22, fontWeight:800, color:recC, marginBottom:8 }}>{reasoning.recommendation} · {reasoning.confidence}</div>
                   <p style={{ fontSize:13, color:C.textD, lineHeight:1.75, margin:0 }}>{reasoning.reasoning_summary}</p>
@@ -592,7 +596,7 @@ export default function EnergyAgentDashboard() {
               <div style={{ display:"grid", gap:8 }}>
                 {data.news.articles.map((a,i)=>(
                   <a key={i} href={a.url} target="_blank" rel="noopener noreferrer">
-                    <div className="newscard" style={{ background:C.bg2, border:`1px solid ${C.border}`, borderRadius:12, padding:"14px 18px", cursor:"pointer", transition:"all 0.18s" }}>
+                    <div className="newscard" style={{ background:C.bg2, border:`1px solid ${C.border}`, borderRadius:12, padding:"12px 14px", cursor:"pointer", transition:"all 0.18s" }}>
                       <div style={{ display:"flex", alignItems:"center", gap:8, marginBottom:7, flexWrap:"wrap" }}>
                         <span style={{ fontSize:9, background:"rgba(41,121,212,0.1)", border:"1px solid rgba(0,180,216,0.2)", borderRadius:5, padding:"2px 9px", color:C.blue, letterSpacing:1, fontFamily:"monospace", fontWeight:700 }}>{a.source.toUpperCase()}</span>
                         <span style={{ fontSize:10, color:C.textDD, fontFamily:"monospace" }}>{a.publishedAt?.slice(0,10)}</span>
@@ -607,7 +611,7 @@ export default function EnergyAgentDashboard() {
 
             {tab==="history" && (
               <div style={{ display:"grid", gap:10 }}>
-                <Card style={{ padding:"18px 20px" }}>
+                <Card style={{ padding:"14px 14px" }}>
                   <Label>PRICE HISTORY WITH AI SIGNALS</Label>
                   <HistoryChart history={history}/>
                 </Card>
@@ -636,7 +640,7 @@ export default function EnergyAgentDashboard() {
             )}
 
             {tab==="logs" && (
-              <Card style={{ padding:"18px 20px" }}>
+              <Card style={{ padding:"14px 14px" }}>
                 <Label>AGENT EXECUTION LOG · {data.elapsed_seconds}s · {src}</Label>
                 <div style={{ display:"grid", gap:14 }}>
                   {agentLog.map((log,i)=>(
@@ -654,7 +658,7 @@ export default function EnergyAgentDashboard() {
 
           {/* ── SETTINGS + EMAIL ── */}
           <div className="ea5" style={{ display:"grid", gridTemplateColumns:"repeat(auto-fit,minmax(280px,1fr))", gap:12, marginBottom:14 }}>
-            <Card style={{ padding:"18px 20px" }}>
+            <Card style={{ padding:"14px 14px" }}>
               <Label>PRICE ALERT THRESHOLDS</Label>
               <div style={{ display:"grid", gap:10, marginBottom:14 }}>
                 {[["Alert above (€/MWh)","price_above"],["Alert below (€/MWh)","price_below"],["Volatility above (€)","volatility_above"]].map(([label,key])=>(
@@ -672,7 +676,7 @@ export default function EnergyAgentDashboard() {
               </button>
             </Card>
 
-            <Card style={{ padding:"18px 20px", border:`1px solid rgba(0,180,216,0.15)` }}>
+            <Card style={{ padding:"14px 14px", border:`1px solid rgba(0,180,216,0.15)` }}>
               <Label>EMAIL ALERTS</Label>
               <p style={{ fontSize:12, color:C.textD, lineHeight:1.7, marginBottom:14, marginTop:0 }}>Subscribe to receive automatic alerts when high-severity signals are triggered. Works with any email address.</p>
               <div style={{ display:"flex", flexDirection:"column", gap:8 }}>
@@ -694,14 +698,14 @@ export default function EnergyAgentDashboard() {
 
           {/* ── CHAT ── */}
           <Card style={{ overflow:"hidden" }}>
-            <div style={{ padding:"12px 20px", borderBottom:`1px solid ${C.border}`, display:"flex", alignItems:"center", gap:8 }}>
+            <div style={{ padding:"10px 14px", borderBottom:`1px solid ${C.border}`, display:"flex", alignItems:"center", gap:8 }}>
               <div style={{ width:7, height:7, borderRadius:"50%", background:C.blue, animation:"bPulse 2s infinite" }}/>
               <span style={{ fontSize:10, color:C.textD, fontWeight:700, letterSpacing:2, fontFamily:"monospace" }}>ASK THE AGENT</span>
               {msgs.length>0 && (
                 <button onClick={()=>setMsgs([])} style={{ marginLeft:"auto", fontSize:9, color:C.textDD, background:"none", border:"none", cursor:"pointer", letterSpacing:1.5, fontFamily:"monospace" }}>CLEAR</button>
               )}
             </div>
-            <div style={{ height:260, overflowY:"auto", padding:"16px 20px", display:"flex", flexDirection:"column", gap:10 }}>
+            <div style={{ height:260, overflowY:"auto", padding:"14px 14px", display:"flex", flexDirection:"column", gap:10 }}>
               {msgs.length===0 && (
                 <div style={{ flex:1, display:"flex", alignItems:"center", justifyContent:"center", flexDirection:"column", gap:10, opacity:0.35 }}>
                   <div style={{ fontSize:28 }}>⚡</div>
